@@ -1,0 +1,160 @@
+button:focus, button:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ a {
+     text-decoration: none;
+     color: rgb(41, 43, 44);
+ }
+
+ header{
+     position: fixed;
+     top: 0;
+     width: 100vw;
+     background-color: transparent;
+     z-index: 5;
+     transition: .3s;
+ }
+
+ header:hover{
+     background-color: rgba(255, 155, 0, .99) !important;
+ }
+
+ header nav a img{
+     width: 40px;
+     height: 40px;
+ }
+
+ .navbar-toggler {
+     border-color: rgb(41, 43, 44);
+ }
+
+ .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(41, 43, 44, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") ;
+ }
+
+.jumbotron {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background-color:black;
+    height: 80vh;
+    margin-bottom: 0;
+}
+
+.jumbotron video {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width:100%;
+    height:100%;
+    /*  object-fit is not supported on IE  */
+    object-fit: cover;
+    opacity:0.5;
+}
+
+.jumbotron .container {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+    color: white;
+}
+  
+#signUp{
+      width: 15em;
+      height: 3em;
+      border-radius: 3em;
+      border: 1px solid whitesmoke;
+      background-color: transparent;
+      color: whitesmoke;
+      transition: .2s;
+}
+
+#signUp:hover{
+      background-color: rgba(255, 155, 0, .9);
+}
+
+#inputDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 155, 0, 1);
+    height: 5em;
+}
+
+#start, #end, #genBtn{
+    padding: 1.5em;
+    height: 2.5em;
+    margin: 2em;
+
+}
+
+#start {
+    border-radius: 1em;
+    border: none;
+}
+
+#end {
+    border-radius: 1em;
+    border: none;
+}
+
+#genBtn {
+    border-radius: 1em;
+    border: none;
+
+}
+
+thead th{
+    vertical-align: middle !important;
+}
+
+th:nth-child(2){
+    text-align: start;
+}
+
+tr{
+    vertical-align: text-top;
+    text-align: center;
+}
+
+td:nth-child(2){
+    text-align: start;
+}
+
+tr:hover{
+    background-color: rgba(255, 155, 0, .9);
+}
+
+td:hover{
+    background-color: rgba(250, 190, 97, 0.9);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(41, 43, 44);
+    color: white;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+footer img{
+    width: 40px;
+    height: 40px;
+    width: 40px;
+    height: 40px;
+    margin: 10px 20px 10px 20px;
+}
