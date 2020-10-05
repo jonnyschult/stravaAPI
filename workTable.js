@@ -3,7 +3,7 @@ function epochTimeConverter(date){
     let epochYear = 1970;
     let year = parseInt(dateVals[0]);
     let month = (parseInt(dateVals[1])-1);
-    let day = (parseInt(dateVals[2])-1);
+    let day = (parseInt(dateVals[2]));
     let leapDay = 0;
     let monthDays = 0;
 
@@ -26,7 +26,7 @@ function epochTimeConverter(date){
 
     let epochTime = ((((year - epochYear) * 365) + monthDays + (day) + leapDay) * 86400)
 
-    console.log(epochTime, 915148800)
+    return epochTime
 }
 
-epochTimeConverter(date)
+console.log(epochTimeConverter(`2020-10-04`))

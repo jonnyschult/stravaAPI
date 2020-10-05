@@ -5,7 +5,12 @@ button:focus, button:active {
 
  a {
      text-decoration: none;
-     color: rgb(41, 43, 44);
+     color: whitesmoke;
+ }
+
+ a:hover{
+    text-decoration: none;
+    color: whitesmoke;
  }
 
  header{
@@ -18,7 +23,7 @@ button:focus, button:active {
  }
 
  header:hover{
-     background-color: rgba(255, 155, 0, .99) !important;
+     background-color: rgba(255, 155, 0, 1) !important;
  }
 
  header nav a img{
@@ -27,7 +32,7 @@ button:focus, button:active {
  }
 
  .navbar-toggler {
-     border-color: rgb(41, 43, 44);
+     /* border-color: rgb(41, 43, 44); */
  }
 
  .navbar-toggler-icon {
@@ -78,20 +83,30 @@ button:focus, button:active {
 
 #signUp:hover{
       background-color: rgba(255, 155, 0, .9);
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, .6);
+}
+
+#signUp:active{
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0) !important;
 }
 
 #inputDiv {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 155, 0, 1);
+    background-color: rgb(41, 43, 44);
     height: 5em;
 }
 
+#inputDiv label{
+    margin: 0;
+    color: whitesmoke;
+}
+
 #start, #end, #genBtn{
-    padding: 1.5em;
+    padding: 1.2em;
     height: 2.5em;
-    margin: 2em;
+    margin: 1em;
 
 }
 
@@ -106,13 +121,26 @@ button:focus, button:active {
 }
 
 #genBtn {
+    display: flex;
+    align-items: center;
     border-radius: 1em;
-    border: none;
+    border: 1px solid whitesmoke;
+    color: rgb(41, 43, 44);
+    background-color: rgba(255, 155, 0, 1);
+    line-height: 2em;
+}
 
+#genBtn:hover {
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, .6);
+}
+
+#genBtn:active{
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0) !important;
 }
 
 thead th{
     vertical-align: middle !important;
+    background-color: rgb(81, 83, 84) !important;
 }
 
 th:nth-child(2){
@@ -129,11 +157,61 @@ td:nth-child(2){
 }
 
 tr:hover{
-    background-color: rgba(255, 155, 0, .9);
+    background-color: rgba(255, 155, 0, 1);
 }
 
 td:hover{
-    background-color: rgba(250, 190, 97, 0.9);
+    background-color: rgba(250, 190, 97, 1);
+}
+
+#histogram {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 40vh;
+    transform: rotate(180deg);
+}
+
+.divBar {
+    position: relative;
+    top: 0;
+}
+
+.divBar:hover{
+    background-color: rgba(255, 155, 0, 1)!important;
+    transform: rotate(180deg);
+    z-index: 1 !important;
+}
+
+.divBar .divBarSpan {
+    position: absolute;
+    left: -4.5em;
+    top: -50px;
+    background-color: rgb(41, 43, 44);
+    color: whitesmoke;
+    width: 10em;
+    border-radius: 5px;
+}
+
+.divBar:hover .divBarSpan {
+    visibility: visible !important;
+    display:  block !important;
+    z-index: 1 !important;
+}
+
+#furtherInfo {
+    background-color: rgb(41, 43, 44);
+    color: whitesmoke;
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+#furtherInfo h1 {
+    background-color: rgb(41, 43, 44);
+    color: whitesmoke;
+}
+
+#furtherInfo ul {
+    margin-bottom: 0;
 }
 
 footer {
@@ -145,6 +223,7 @@ footer {
     align-items: center;
     background-color: rgb(41, 43, 44);
     color: white;
+    margin-top: 0;
 }
 
 footer p {
