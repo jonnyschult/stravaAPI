@@ -323,7 +323,6 @@ function accessibleData(athleteInfo, activitiesInfo){
         let lastDay = (epochTimeConverter(endDate.value) + 86400)
         let numberOfDays = (lastDay - firstDay) /86400
 
-        // let widthPercent = activities.length;
         for(let i = 0; i < numberOfDays; i++){
             let divBar = document.createElement('div');
             let divBarSpan = document.createElement('span');
@@ -372,7 +371,6 @@ function accessibleData(athleteInfo, activitiesInfo){
         }
         mostMilesDayFinder(activities);
 
-        console.log(mostMilesDay);
 
         function dayChecker(date){
             let thisDay = epochTimeConverter(date);
