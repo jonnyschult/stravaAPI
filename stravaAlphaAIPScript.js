@@ -50,9 +50,9 @@ function getAthlete(authInfo){
 
 
 function getActivities(authInfo, athleteInfo){
-    let unixStartDate = epochTimeConverter(startDate.value);
-    console.log(unixStartDate)
-    let unixEndDate = (epochTimeConverter(endDate.value) + 86400)
+    let unixStartDate = (epochTimeConverter(startDate.value) + 18000); //+18000 puts Epoch time to Central Time
+    console.log(unixStartDate);
+    let unixEndDate = (epochTimeConverter(endDate.value) + 86400 + 18000) // +86400 makes the day inclusive
     let activitiesLink = `https://www.strava.com/api/v3/athlete/activities?before=${unixEndDate}&after=${unixStartDate}&per_page=200&access_token=${authInfo}`
     ; //max activities = 200  
     fetch(activitiesLink)
@@ -126,7 +126,7 @@ function accessibleData(athleteInfo, activitiesInfo){
 
     userPic.src = userData.profileData.profile_medium;
 
-//VANILLA SHEETS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//TABLES!!!
     function timeConverter(seconds){
         let remainingSecs = seconds % 60;
         let minutes = Math.floor(seconds /60);
@@ -145,10 +145,6 @@ function accessibleData(athleteInfo, activitiesInfo){
     for(let i = 0; i < userData.activities.length; i++){  
         let tableRow = document.createElement('tr');
         tableRow.setAttribute('class', 'tableRows')
-
-        if(i >= userData.activities.length){
-            tableRow.setAttribute('class', 'tableRows tfooters')
-        }
 
         //FILLING OUT TD DATA
 
@@ -272,7 +268,7 @@ function accessibleData(athleteInfo, activitiesInfo){
                     totalDistance += activity.distance;
                 })
                 avgData = minutesPer(totalTime, totalDistance)
-                ttlsData = 'N/A'
+                ttlsData = '– – –';
                 break;
             case 8:
                 totalTime = 0;
@@ -282,7 +278,7 @@ function accessibleData(athleteInfo, activitiesInfo){
                     totalDistance += activity.distance;
                 })
                 avgData = minutesPer(totalTime, (totalDistance * 0.621371));
-                ttlsData = 'N/A';
+                ttlsData =  '– – –';
                 break;
             case 9:
                 totalAvgHR = 0;
@@ -295,7 +291,7 @@ function accessibleData(athleteInfo, activitiesInfo){
                     }
                 });
                 avgData = (totalAvgHR / (userData.activities.length - missedHR)).toFixed(2);
-                ttlsData = 'N/A';
+                ttlsData = '– – –';
                 break;
             case 10:
                 totalAvgHR = 0;
@@ -308,7 +304,7 @@ function accessibleData(athleteInfo, activitiesInfo){
                     }
                 });
                 avgData = (totalAvgHR / (userData.activities.length - missedHR)).toFixed(2);
-                ttlsData = 'N/A';
+                ttlsData = '– – –';
                 break;
 
         }
@@ -319,11 +315,13 @@ function accessibleData(athleteInfo, activitiesInfo){
     
     //HISTOGRAM DRIP!!!
 
+    let histHeader = document.getElementById('histHeader')
+    histHeader.innerText = `${startDate.value} to ${endDate.value} at a Glance`
+
     function histogramMaker(activities){
         let firstDay = epochTimeConverter(startDate.value);
         let lastDay = (epochTimeConverter(endDate.value) + 86400)
         let numberOfDays = (lastDay - firstDay) /86400
-        console.log(numberOfDays)
 
         // let widthPercent = activities.length;
         for(let i = 0; i < numberOfDays; i++){
@@ -335,9 +333,9 @@ function accessibleData(athleteInfo, activitiesInfo){
             divBarSpan.style.display = 'none';
             divBarSpan.style.visibility = 'hidden';
 
-            divBar.style.width = `${(1/activities.length) * 100}%`;
+            divBar.style.width = `${(1/numberOfDays) * 100}%`;
             divBar.style.height = `1px`;
-            divBar.style.backgroundColor = "rgb(41, 43, 44)";
+            // divBar.style.backgroundColor = "rgb(41, 43, 44)";
 
             divBarSpan.innerText = 'No Activity Recorded';
 
@@ -348,25 +346,70 @@ function accessibleData(athleteInfo, activitiesInfo){
         let divBars = document.querySelectorAll('.divBar');
         let divBarSpans = document.querySelectorAll('.divBarSpan')
 
-        let longestRun = 0;
-        userData.activities.forEach(activity => {
-            if(activity.distance > longestRun){
-                longestRun = activity.distance;
+        let mostMilesDay = 0;
+
+        function mostMilesDayFinder(activities){
+            let multirunDay = 0;
+            let longestMultirunDay = 0;
+            let lastDate = null;
+            for (let i = 0; i < activities.length; i++){
+                if(activities[i].start_date_local.substr(0, 10) === lastDate){
+                    multirunDay += activities[i].distance;
+                }else{
+                    multirunDay = activities[i].distance;
+                }
+                if(multirunDay > longestMultirunDay){
+                    longestMultirunDay = multirunDay;
+                }
+                if(longestMultirunDay > mostMilesDay){
+                    mostMilesDay = longestMultirunDay;
+                }
+                if(activities[i].distance > mostMilesDay){
+                    mostMilesDay = activities[i].distance;
+                }
+                lastDate = userData.activities[i].start_date_local.substr(0, 10)
             }
-        })
+        }
+        mostMilesDayFinder(activities);
+
+        console.log(mostMilesDay);
 
         function dayChecker(date){
             let thisDay = epochTimeConverter(date);
             return ((thisDay + 86400) - firstDay) / 86400;
         }
 
-        for(let i = 0; i < activities.length; i++){
-            let dayNumber = dayChecker(activities[i].start_date.substr(0, 10));
-            divBars[dayNumber-1].style.height = `${(activities[i].distance / longestRun)*100}%`;
-            divBarSpans[dayNumber-1].innerText = `Date: ${activities[i].start_date.substr(0, 10)} Distance: ${(activities[i].distance/1000).toFixed(2)} km`;
+        function barBuilder(activities){
+            let milesCounter = 0;
+            let runNumber = 0;
+            for(let i = 0; i < activities.length; i++){
+                let dayNumber = dayChecker(activities[i].start_date_local.substr(0, 10));
+                if(divBars[dayNumber-1].style.height !== `1px`){
+                    runNumber++;
+                    milesCounter += activities[i].distance;
+                    console.log(milesCounter, activities[i].start_date_local.substr(0, 10));
+                    divBars[dayNumber-1].style.height = `${(milesCounter / mostMilesDay) * 100}%`;
+                    let divBarSpan = document.createElement('span');
+    
+                    divBarSpan.setAttribute('class', 'divBarSpan');
+                    divBarSpan.style.display = 'none';
+                    divBarSpan.style.visibility = 'hidden';
+    
+                    divBarSpan.innerText = `Date: ${activities[i].start_date_local.substr(0, 10)} Distance: ${(milesCounter/1000).toFixed(2)} km  Runs: ${runNumber}`;
+    
+                    divBars[dayNumber-1].appendChild(divBarSpan);
+                } else {
+                    divBars[dayNumber-1].style.height = `${(activities[i].distance / mostMilesDay)*100}%`;
+                    divBarSpans[dayNumber-1].innerText = `Date: ${activities[i].start_date_local.substr(0, 10)} Distance: ${(activities[i].distance/1000).toFixed(2)} km`;
+                    milesCounter = activities[i].distance;
+                    runNumber = 1;
+                }
+    
+            }
         }
+        barBuilder(activities);
     }
-    histogramMaker(userData.activities)
+    histogramMaker(userData.activities);
 };
 
 let header = document.getElementById('header')

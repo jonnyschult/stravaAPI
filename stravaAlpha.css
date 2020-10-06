@@ -1,3 +1,7 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+
 button:focus, button:active {
     outline: none !important;
     box-shadow: none;
@@ -29,6 +33,7 @@ button:focus, button:active {
  header nav a img{
      width: 40px;
      height: 40px;
+     opacity: .85;
  }
 
  .navbar-toggler {
@@ -104,10 +109,10 @@ button:focus, button:active {
 }
 
 #start, #end, #genBtn{
+    line-height: -17px;
     padding: 1.2em;
     height: 2.5em;
     margin: 1em;
-
 }
 
 #start {
@@ -118,6 +123,11 @@ button:focus, button:active {
 #end {
     border-radius: 1em;
     border: none;
+}
+
+#start:focus, #end:focus, #button:focus {
+    border: none;
+    outline: none;
 }
 
 #genBtn {
@@ -164,45 +174,72 @@ td:hover{
     background-color: rgba(250, 190, 97, 1);
 }
 
+#histHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 155, 0, 1);
+}
+
+#histHeader{
+    background-color: rgb(41, 43, 44);
+    color: whitesmoke;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 10px;
+}
+
 #histogram {
     display: flex;
     flex-direction: row-reverse;
     height: 40vh;
     transform: rotate(180deg);
+    width: 92%;
+    margin-bottom: -1px;
 }
 
 .divBar {
     position: relative;
     top: 0;
+    margin: 0;
+    background-color: rgb(41, 43, 44);
 }
 
 .divBar:hover{
-    background-color: rgba(255, 155, 0, 1)!important;
+    background-color: whitesmoke!important;
     transform: rotate(180deg);
     z-index: 1 !important;
+    margin: 0;
+    /* box-shadow: 4px 4px 4px rgba(0, 0, 0, .6); */
+
 }
 
 .divBar .divBarSpan {
     position: absolute;
-    left: -4.5em;
-    top: -50px;
+    left: -60px;
+    top: -85px;
     background-color: rgb(41, 43, 44);
     color: whitesmoke;
-    width: 10em;
+    width: 8.8em;
     border-radius: 5px;
+    margin-bottom: 0;
 }
 
 .divBar:hover .divBarSpan {
+    border: 1px dotted whitesmoke;
     visibility: visible !important;
     display:  block !important;
     z-index: 1 !important;
+    margin-bottom: 0;
 }
 
 #furtherInfo {
     background-color: rgb(41, 43, 44);
     color: whitesmoke;
     padding: 20px;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 #furtherInfo h1 {
